@@ -50,6 +50,76 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.primary,
+      appBar: AppBar(
+        title: Text(
+          'HOME',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: userInfoOnTap,
+            icon: Icon(Icons.person_3_sharp),
+          ),
+          IconButton(
+            onPressed: logout,
+            icon: Icon(
+              Icons.logout_sharp,
+            ),
+          ),
+        ],
+        elevation: 0,
+        leading: Icon(Icons.menu_sharp),
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(80),
+          child: Container(
+            height: 80,
+            padding: EdgeInsets.only(left: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.orange,
+                      ),
+                    ),
+                    Container(
+                      width: 15,
+                      height: 15,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.red.withOpacity(0.2),
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.person),
+                      iconSize: 20,
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+                Gap(20),
+                Text(
+                  '${user.empName} 님 환영합니다.',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
       body: SafeArea(
         child: SizedBox(
           width: size.width,
@@ -59,56 +129,18 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SizedBox(
-                  width: size.width * 0.9,
-                  height: size.height * 0.15,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 20,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        //alignment: Alignment.centerRight,
-                        child: Text(
-                          '${user.empName} 님 환영합니다.',
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: userInfoOnTap,
-                        icon: const Icon(
-                          Icons.person_rounded,
-                        ),
-                        iconSize: 35.0,
-                      ),
-                      IconButton(
-                        onPressed: logout,
-                        icon: const Icon(
-                          Icons.logout,
-                        ),
-                        iconSize: 35.0,
-                      ),
-                    ],
-                  ),
-                ),
-                Gap(size.height * 0.01),
                 Expanded(
                   child: GridView.count(
                     padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                     physics: BouncingScrollPhysics(),
-                    mainAxisSpacing: 2,
-                    crossAxisSpacing: 2,
+                    mainAxisSpacing: 20,
+                    crossAxisSpacing: 20,
                     crossAxisCount: 3,
                     children: [
-                      GestureDetector(
+                      MenuIconWidget(
+                        color: Colors.red.withOpacity(0.4),
+                        menuName: '주문분석',
+                        icon: Icons.auto_graph,
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
@@ -116,16 +148,12 @@ class HomeScreen extends StatelessWidget {
                             ),
                           );
                         },
-                        child: MenuIconWidget(
-                          color: Colors.red.withOpacity(0.4),
-                          menuName: '주문분석',
-                          icon: Icons.auto_graph,
-                        ),
                       ),
                       MenuIconWidget(
                         color: Colors.orange.shade200,
                         menuName: '일별주문금액',
                         icon: Icons.view_compact,
+                        onTap: () {},
                       ),
                     ],
                   ),

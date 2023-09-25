@@ -6,7 +6,6 @@ import 'package:flutter_test_01/main.dart';
 import 'package:flutter_test_01/models/user.dart';
 import 'package:flutter_test_01/screens/home_screen.dart';
 import 'package:flutter_test_01/screens/noti_screen.dart';
-import 'package:flutter_test_01/screens/userinfo_screen.dart';
 import 'package:flutter_test_01/utils/constants.dart';
 import 'package:flutter_test_01/utils/notification.dart';
 import 'package:flutter_test_01/utils/token.dart';
