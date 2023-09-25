@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test_01/models/user.dart';
 import 'package:flutter_test_01/screens/login_screen.dart';
+import 'package:flutter_test_01/screens/orderanalysis_screen.dart';
+import 'package:flutter_test_01/screens/userinfo_screen.dart';
 import 'package:flutter_test_01/utils/constants.dart';
 import 'package:flutter_test_01/utils/token.dart';
 import 'package:flutter_test_01/widgets/menu_widget.dart';
@@ -19,7 +21,6 @@ class HomeScreen extends StatelessWidget {
     var size = MediaQuery.of(context).size;
 
     void logout() {
-
       AuthToken.delAutoLogin();
 
       Navigator.pushAndRemoveUntil(
@@ -32,6 +33,17 @@ class HomeScreen extends StatelessWidget {
         const SnackBar(
           content: Text('로그아웃 되었습니다.'),
           backgroundColor: Colors.green,
+        ),
+      );
+    }
+
+    void userInfoOnTap() {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => UserInfoScreen(
+            empCode: user.empCode,
+          ),
         ),
       );
     }
@@ -71,7 +83,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: userInfoOnTap,
                         icon: const Icon(
                           Icons.person_rounded,
                         ),
@@ -96,14 +108,23 @@ class HomeScreen extends StatelessWidget {
                     crossAxisSpacing: 2,
                     crossAxisCount: 3,
                     children: [
-                      MenuIconWidget(
-                        color: Colors.red.withOpacity(0.4),
-                        menuName: '판매실적',
-                        icon: Icons.auto_graph,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const OrderAnalysisScreen(),
+                            ),
+                          );
+                        },
+                        child: MenuIconWidget(
+                          color: Colors.red.withOpacity(0.4),
+                          menuName: '주문분석',
+                          icon: Icons.auto_graph,
+                        ),
                       ),
                       MenuIconWidget(
                         color: Colors.orange.shade200,
-                        menuName: '재고현황',
+                        menuName: '일별주문금액',
                         icon: Icons.view_compact,
                       ),
                     ],

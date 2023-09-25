@@ -17,7 +17,6 @@ class MenuIconWidget extends StatefulWidget {
 }
 
 class _MenuIconWidgetState extends State<MenuIconWidget> {
-  void menuOnTap() {}
 
   @override
   Widget build(BuildContext context) {
@@ -30,22 +29,26 @@ class _MenuIconWidgetState extends State<MenuIconWidget> {
         color: widget.color,
         borderRadius: BorderRadius.circular(10),
         border: Border.all(width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: widget.color.withOpacity(0.3),
+            blurRadius: 5,
+            offset: Offset(5, 8),
+          ),
+        ]
       ),
-      child: GestureDetector(
-        onTap: menuOnTap,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              widget.icon,
-              size: 50.0,
-            ),
-            Text(
-              widget.menuName,
-              style: const TextStyle(fontWeight: FontWeight.w500),
-            ),
-          ],
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            widget.icon,
+            size: 50.0,
+          ),
+          Text(
+            widget.menuName,
+            style: const TextStyle(fontWeight: FontWeight.w500),
+          ),
+        ],
       ),
     );
   }
