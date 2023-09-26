@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test_01/core/api_client.dart';
+import 'package:flutter_test_01/screens/login_screen.dart';
 import 'package:flutter_test_01/utils/constants.dart';
+import 'package:flutter_test_01/utils/token.dart';
 
 class UserInfoScreen extends StatefulWidget {
   final String empCode;
@@ -27,47 +29,50 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
+    void logout() {
+      AuthToken.delAutoLogin();
+
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+        (route) => false,
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('로그아웃 되었습니다.'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    }
+
     return Scaffold(
       backgroundColor: AppColors.primary,
+      appBar: AppBar(
+        title: Text(
+          '사용자 정보',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: logout,
+            icon: Icon(
+              Icons.logout,
+            ),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
           child: Column(
             children: [
-              Container(
+              SizedBox(
                 width: size.width,
-                height: size.height * 0.15,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "사용자 정보",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 1, color: Colors.white),
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.logout_outlined,
-                          size: 35,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                width: size.width,
-                height: size.height * 0.65,
+                height: size.height * 0.5,
                 child: FutureBuilder<Map<String, dynamic>>(
                   future: userData,
                   builder: (context, snapshot) {
@@ -87,42 +92,42 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                             children: [
                               Text(
                                 '${data["cD_EMP"]} / ${data["nM_USER"]}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w300,
                                 ),
                               ),
                               Text(
                                 '입사일 : ${data["dT_SDATE"]}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w300,
                                 ),
                               ),
                               Text(
                                 data["nM_DEPT"],
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w300,
                                 ),
                               ),
                               Text(
                                 data["nO_TEL"],
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w300,
                                 ),
                               ),
                               Text(
                                 data["nO_MOBILE"],
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w300,
                                 ),
                               ),
                               Text(
                                 data["tX_EMAIL"],
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w300,
                                 ),
@@ -133,7 +138,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                       }
                     }
 
-                    return Text(
+                    return const Text(
                       'No Data Found',
                       style: TextStyle(
                         fontSize: 25,
@@ -141,16 +146,6 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                       ),
                     );
                   },
-                ),
-              ),
-              Container(
-                width: size.width,
-                height: size.height * 0.05,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text('뒤로'),
                 ),
               ),
             ],

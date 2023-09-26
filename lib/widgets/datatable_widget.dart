@@ -19,20 +19,24 @@ class DataTableWidget extends StatelessWidget {
 
   Widget dtAnalysis() {
     var resultCol = [
-      DataColumn2(
+      const DataColumn2(
         label: Text('일자'),
+        size: ColumnSize.M,
       ),
-      DataColumn2(
+      const DataColumn2(
         label: Text('주문금액'),
         numeric: true,
+        size: ColumnSize.L,
       ),
-      DataColumn2(
+      const DataColumn2(
         label: Text('결제금액'),
         numeric: true,
+        size: ColumnSize.L,
       ),
-      DataColumn2(
+      const DataColumn2(
         label: Text('할인금액'),
         numeric: true,
+        size: ColumnSize.L,
       ),
     ];
 

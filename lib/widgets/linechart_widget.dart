@@ -2,7 +2,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test_01/models/order.dart';
 import 'package:flutter_test_01/utils/constants.dart';
-import 'package:intl/intl.dart';
 
 class LineChartWidget extends StatelessWidget {
   final List<OrderAnanlys> data;
@@ -14,8 +13,9 @@ class LineChartWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LineChart(
-      duration: Duration(milliseconds: 250),
+      duration: const Duration(milliseconds: 250),
       LineChartData(
+        backgroundColor: Colors.lime[100],
         titlesData: titleData,
         lineBarsData: [orderData, paidData, discountData],
         minX: 0,
@@ -51,6 +51,8 @@ class LineChartWidget extends StatelessWidget {
         isCurved: true,
         dotData: const FlDotData(show: true),
         color: AppColors.contentColorCyan,
+        show: true,
+        showingIndicators: [1, 2],
       );
 
   LineChartBarData get paidData => LineChartBarData(
@@ -62,6 +64,8 @@ class LineChartWidget extends StatelessWidget {
         dotData: const FlDotData(show: true),
         color: AppColors.contentColorOrange,
         barWidth: 5,
+        show: true,
+        showingIndicators: [1, 3],
       );
 
   LineChartBarData get discountData => LineChartBarData(
@@ -73,5 +77,7 @@ class LineChartWidget extends StatelessWidget {
         isCurved: true,
         dotData: const FlDotData(show: true),
         color: AppColors.contentColorRed,
+        show: true,
+        showingIndicators: [1, 4],
       );
 }

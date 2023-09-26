@@ -20,23 +20,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    void logout() {
-      AuthToken.delAutoLogin();
-
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
-        (route) => false,
-      );
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('로그아웃 되었습니다.'),
-          backgroundColor: Colors.green,
-        ),
-      );
-    }
-
     void userInfoOnTap() {
       Navigator.push(
         context,
@@ -51,32 +34,19 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.primary,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'HOME',
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: userInfoOnTap,
-            icon: Icon(Icons.person_3_sharp),
-          ),
-          IconButton(
-            onPressed: logout,
-            icon: Icon(
-              Icons.logout_sharp,
-            ),
-          ),
-        ],
         elevation: 0,
-        leading: Icon(Icons.menu_sharp),
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(80),
+          preferredSize: const Size.fromHeight(80),
           child: Container(
             height: 80,
-            padding: EdgeInsets.only(left: 16),
+            padding: const EdgeInsets.only(left: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -85,34 +55,33 @@ class HomeScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   children: [
                     Container(
-                      width: 30,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.orange,
-                      ),
-                    ),
-                    Container(
-                      width: 15,
-                      height: 15,
+                      width: 45,
+                      height: 45,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        color: Colors.red.withOpacity(0.2),
+                        color: Colors.deepPurple.withOpacity(.3),
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 10,
+                            color: Colors.deepPurple.withOpacity(.1),
+                            offset: const Offset(5, 8),
+                          ),
+                        ],
                       ),
                     ),
                     IconButton(
-                      icon: Icon(Icons.person),
-                      iconSize: 20,
-                      onPressed: () {},
+                      icon: const Icon(Icons.person),
+                      iconSize: 30,
+                      onPressed: userInfoOnTap,
                     ),
                   ],
                 ),
-                Gap(20),
+                const Gap(10),
                 Text(
                   '${user.empName} 님 환영합니다.',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.w500,
-                    fontSize: 16,
+                    fontSize: 18,
                   ),
                 ),
               ],
@@ -131,8 +100,9 @@ class HomeScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: GridView.count(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                    physics: BouncingScrollPhysics(),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                    physics: const BouncingScrollPhysics(),
                     mainAxisSpacing: 20,
                     crossAxisSpacing: 20,
                     crossAxisCount: 3,

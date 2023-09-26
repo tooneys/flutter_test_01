@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test_01/core/api_client.dart';
 import 'package:flutter_test_01/main.dart';
@@ -34,7 +35,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     streamController.close();
     super.dispose();
   }
@@ -193,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Gap(size.height * 0.02),
                           Row(
                             children: [
-                              Switch(
+                              CupertinoSwitch(
                                 value: isAutoLogin,
                                 onChanged: (value) {
                                   setState(() {
@@ -216,23 +216,15 @@ class _LoginScreenState extends State<LoginScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Expanded(
-                                child: ElevatedButton(
+                                child: CupertinoButton.filled(
                                   onPressed: login,
-                                  style: ElevatedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 40,
-                                      vertical: 15,
-                                    ),
-                                  ),
+                                  borderRadius: BorderRadius.circular(10),
+                                  disabledColor: Colors.grey,
                                   child: const Text(
                                     'Login',
                                     style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ),
                               ),
