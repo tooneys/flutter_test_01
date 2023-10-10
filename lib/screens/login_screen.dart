@@ -10,7 +10,7 @@ import 'package:flutter_test_01/screens/noti_screen.dart';
 import 'package:flutter_test_01/utils/constants.dart';
 import 'package:flutter_test_01/utils/notification.dart';
 import 'package:flutter_test_01/utils/token.dart';
-import 'package:flutter_test_01/utils/validator.dart';
+import 'package:flutter_test_01/widgets/textedit_widget.dart';
 import 'package:gap/gap.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -116,135 +116,116 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: AppColors.primary,
       body: StreamBuilder<String>(
-          stream: streamController.stream,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              print(snapshot.data);
-              if (snapshot.data == 'HELLOWORLD') {
-                WidgetsBinding.instance.addPostFrameCallback(
-                  (_) {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) {
-                        return const NotiTestScreen();
-                      }),
-                    );
-                  },
-                );
-              }
+        stream: streamController.stream,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data == 'HELLOWORLD') {
+              WidgetsBinding.instance.addPostFrameCallback(
+                (_) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) {
+                      return const NotiTestScreen();
+                    }),
+                  );
+                },
+              );
             }
+          }
 
-            return Form(
-              key: _formkey,
-              child: SizedBox(
-                width: size.width,
-                height: size.height,
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    width: size.width * 0.85,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            alignment: Alignment.center,
-                            child: Image(
-                              image: AssetImage('assets/images/logo.gif'),
-                              semanticLabel: 'Test',
-                            ),
+          return Form(
+            key: _formkey,
+            child: SizedBox(
+              width: size.width,
+              height: size.height,
+              child: Align(
+                alignment: Alignment.center,
+                child: Container(
+                  width: size.width * 0.85,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 20,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          alignment: Alignment.center,
+                          child: const Image(
+                            image: AssetImage('assets/images/logo.gif'),
                           ),
-                          Gap(size.height * 0.03),
-                          TextFormField(
-                            validator: (value) =>
-                                Validator.validateId(value ?? ""),
-                            controller: _idController,
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                              label: Text('ID'),
-                              hintText: 'ID를 입력해 주세요',
-                              isDense: true,
-                              border: OutlineInputBorder(
+                        ),
+                        Gap(size.height * 0.03),
+                        TextEdit(
+                          label: 'ID',
+                          controller: _idController,
+                        ),
+                        Gap(size.height * 0.02),
+                        TextEdit(
+                          label: 'Password',
+                          controller: _pwController,
+                          isPassword: true,
+                        ),
+                        Gap(size.height * 0.02),
+                        Row(
+                          children: [
+                            CupertinoSwitch(
+                              value: isAutoLogin,
+                              onChanged: (value) {
+                                setState(() {
+                                  isAutoLogin = value;
+                                });
+                              },
+                            ),
+                            const Gap(10),
+                            const Text(
+                              '자동로그인',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Gap(size.height * 0.03),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: CupertinoButton.filled(
+                                onPressed: login,
                                 borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                          ),
-                          Gap(size.height * 0.02),
-                          TextFormField(
-                            validator: (value) =>
-                                Validator.validatePassword(value ?? ""),
-                            controller: _pwController,
-                            keyboardType: TextInputType.text,
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              label: Text('Password'),
-                              hintText: 'Password를 입력해 주세요',
-                              isDense: true,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                          ),
-                          Gap(size.height * 0.02),
-                          Row(
-                            children: [
-                              CupertinoSwitch(
-                                value: isAutoLogin,
-                                onChanged: (value) {
-                                  setState(() {
-                                    isAutoLogin = value ?? false;
-                                  });
-                                },
-                              ),
-                              const Gap(10),
-                              const Text(
-                                '자동로그인',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16,
+                                disabledColor: Colors.grey,
+                                child: const Text(
+                                  'Login',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
-                            ],
-                          ),
-                          Gap(size.height * 0.03),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: CupertinoButton.filled(
-                                  onPressed: login,
-                                  borderRadius: BorderRadius.circular(10),
-                                  disabledColor: Colors.grey,
-                                  child: const Text(
-                                    'Login',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Center(
-                            child: TextButton(
-                              onPressed: () =>
-                                  LocalNotification.showNotification(),
-                              child: Text("알람보내기"),
                             ),
+                          ],
+                        ),
+                        Center(
+                          child: TextButton(
+                            onPressed: () =>
+                                LocalNotification.showNotification(),
+                            child: Text("알람보내기"),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ),
-            );
-          }),
+            ),
+          );
+        },
+      ),
     );
   }
 }
