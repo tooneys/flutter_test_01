@@ -41,70 +41,63 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final _formkey = GlobalKey<FormState>();
   final _apiClient = ApiClient();
-  late User _user;
+  late Future<User> _user;
   final TextEditingController _idController = TextEditingController();
   final TextEditingController _pwController = TextEditingController();
 
   bool isAutoLogin = false;
 
-  Future<void> login() async {
-    try {
-      if (_formkey.currentState!.validate()) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('사용자 정보를 확인중 입니다'),
-            backgroundColor: Colors.green,
-          ),
-        );
+  login() {
+    if (_formkey.currentState!.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('사용자 정보를 확인중 입니다'),
+          backgroundColor: Colors.green,
+        ),
+      );
 
-        try {
-          _user = await _apiClient.login(
-            _idController.text,
-            _pwController.text,
-          );
-        } catch (e) {
+      _user = _apiClient.login(
+        _idController.text,
+        _pwController.text,
+      );
+
+      _user.then(
+        (userValue) {
           ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+          if (userValue.empName.isNotEmpty) {
+            if (isAutoLogin) {
+              AuthToken.setAutoLogin(
+                  userValue.empName, _idController.text, _pwController.text);
+            } else {
+              AuthToken.delAutoLogin();
+            }
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('로그인 되었습니다.'),
+                backgroundColor: Colors.blue,
+              ),
+            );
+
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomeScreen(user: userValue),
+              ),
+              (route) => false,
+            );
+          }
+        },
+      ).catchError(
+        (error) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('사용자 정보가 없습니다.'),
               backgroundColor: Colors.red,
             ),
           );
-          return;
-        }
-
-        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-
-        if (_user.empName.isNotEmpty) {
-          if (isAutoLogin) {
-            AuthToken.setAutoLogin(
-                _user.empName, _idController.text, _pwController.text);
-          } else {
-            AuthToken.delAutoLogin();
-          }
-
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('로그인 되었습니다.'),
-              backgroundColor: Colors.blue,
-            ),
-          );
-
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => HomeScreen(user: _user),
-            ),
-            (route) => false,
-          );
-        }
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.toString()),
-          backgroundColor: Colors.red,
-        ),
+        },
       );
     }
   }
