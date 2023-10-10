@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test_01/utils/validator.dart';
 
-class TextEdit extends StatelessWidget {
+// ignore: must_be_immutable
+class TextEditWidget extends StatelessWidget {
   final String label;
   TextEditingController? controller;
   bool? isPassword;
 
-  TextEdit({
+  TextEditWidget({
     super.key,
     required this.label,
     this.controller,

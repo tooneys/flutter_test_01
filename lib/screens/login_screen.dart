@@ -123,9 +123,11 @@ class _LoginScreenState extends State<LoginScreen> {
               WidgetsBinding.instance.addPostFrameCallback(
                 (_) {
                   Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) {
-                      return const NotiTestScreen();
-                    }),
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const NotiTestScreen();
+                      },
+                    ),
                   );
                 },
               );
@@ -160,12 +162,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         Gap(size.height * 0.03),
-                        TextEdit(
+                        TextEditWidget(
                           label: 'ID',
                           controller: _idController,
                         ),
                         Gap(size.height * 0.02),
-                        TextEdit(
+                        TextEditWidget(
                           label: 'Password',
                           controller: _pwController,
                           isPassword: true,
@@ -173,12 +175,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         Gap(size.height * 0.02),
                         Row(
                           children: [
-                            CupertinoSwitch(
+                            Switch(
                               value: isAutoLogin,
                               onChanged: (value) {
-                                setState(() {
-                                  isAutoLogin = value;
-                                });
+                                setState(
+                                  () {
+                                    isAutoLogin = value;
+                                  },
+                                );
                               },
                             ),
                             const Gap(10),
@@ -203,8 +207,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: const Text(
                                   'Login',
                                   style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
@@ -214,7 +219,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: TextButton(
                             onPressed: () =>
                                 LocalNotification.showNotification(),
-                            child: Text("알람보내기"),
+                            child: const Text("알람보내기"),
                           ),
                         ),
                       ],
