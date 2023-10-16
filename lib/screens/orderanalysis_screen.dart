@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test_01/core/api_client.dart';
 import 'package:flutter_test_01/models/order.dart';
+import 'package:flutter_test_01/screens/error/data_not_found.dart';
+import 'package:flutter_test_01/screens/error/something_wrong.dart';
 import 'package:flutter_test_01/utils/constants.dart';
 import 'package:flutter_test_01/widgets/datatable_widget.dart';
 import 'package:flutter_test_01/widgets/linechart_widget.dart';
@@ -52,15 +54,7 @@ class _OrderAnalysisScreenState extends State<OrderAnalysisScreen> {
               }
 
               if (snapshot.hasError) {
-                return const Center(
-                  child: Text(
-                    "No Data Found",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 25,
-                    ),
-                  ),
-                );
+                return const SomethingWrong();
               }
 
               if (snapshot.hasData) {
@@ -135,13 +129,7 @@ class _OrderAnalysisScreenState extends State<OrderAnalysisScreen> {
                 }
               }
 
-              return const Text(
-                "No Data Found",
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 25,
-                ),
-              );
+              return const DataNotFound();
             },
           ),
         ),

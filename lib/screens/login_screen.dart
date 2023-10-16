@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test_01/core/api_client.dart';
 import 'package:flutter_test_01/main.dart';
 import 'package:flutter_test_01/models/user.dart';
+import 'package:flutter_test_01/screens/error/something_wrong.dart';
 import 'package:flutter_test_01/screens/home_screen.dart';
 import 'package:flutter_test_01/screens/noti_screen.dart';
 import 'package:flutter_test_01/utils/constants.dart';
@@ -111,6 +112,10 @@ class _LoginScreenState extends State<LoginScreen> {
       body: StreamBuilder<String>(
         stream: streamController.stream,
         builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const SomethingWrong();
+          }
+
           if (snapshot.hasData) {
             if (snapshot.data == 'HELLOWORLD') {
               WidgetsBinding.instance.addPostFrameCallback(

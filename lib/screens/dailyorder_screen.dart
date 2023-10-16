@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test_01/core/api_client.dart';
 import 'package:flutter_test_01/models/order.dart';
+import 'package:flutter_test_01/screens/error/data_not_found.dart';
+import 'package:flutter_test_01/screens/error/something_wrong.dart';
 import 'package:flutter_test_01/widgets/datatable_widget.dart';
 
 class DailyOrderScreen extends StatefulWidget {
@@ -46,34 +48,18 @@ class _DailyOrderScreenState extends State<DailyOrderScreen> {
             }
 
             if (snapshot.hasError) {
-              return const Center(
-                child: Text(
-                  "No Data Found",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 25,
-                  ),
-                ),
-              );
+              return const SomethingWrong();
             }
 
             if (snapshot.hasData) {
               final List<OrderAnanlys>? data = snapshot.data;
 
               if (data != null) {
-                return DataTableWidget(
-                  data: data,
-                );
+                return DataTableWidget(data: data);
               }
             }
 
-            return const Text(
-              "No Data Found",
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 25,
-              ),
-            );
+            return const DataNotFound();
           },
         ),
       ),
