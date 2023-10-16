@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test_01/models/user.dart';
+import 'package:flutter_test_01/screens/dailyorder_screen.dart';
 import 'package:flutter_test_01/screens/orderanalysis_screen.dart';
 import 'package:flutter_test_01/screens/userinfo_screen.dart';
 import 'package:flutter_test_01/utils/constants.dart';
@@ -22,9 +23,23 @@ class HomeScreen extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => UserInfoScreen(
-            empCode: user.empCode,
-          ),
+          builder: (context) => UserInfoScreen(empCode: user.empCode),
+        ),
+      );
+    }
+
+    void salesAnalysisOnTap() {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const OrderAnalysisScreen(),
+        ),
+      );
+    }
+
+    void dailyOrderOnTap() {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const DailyOrderScreen(),
         ),
       );
     }
@@ -109,19 +124,13 @@ class HomeScreen extends StatelessWidget {
                         color: Colors.red.withOpacity(0.4),
                         menuName: '주문분석',
                         icon: Icons.auto_graph,
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const OrderAnalysisScreen(),
-                            ),
-                          );
-                        },
+                        onTap: salesAnalysisOnTap,
                       ),
                       MenuIconWidget(
                         color: Colors.orange.shade200,
                         menuName: '일별주문금액',
                         icon: Icons.view_compact,
-                        onTap: () {},
+                        onTap: dailyOrderOnTap,
                       ),
                     ],
                   ),
