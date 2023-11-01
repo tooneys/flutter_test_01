@@ -1,4 +1,4 @@
-package com.example.flutter_test_01
+package com.kgiant.kgiantmobile
 
 import io.flutter.embedding.android.FlutterActivity
 
