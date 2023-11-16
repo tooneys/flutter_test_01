@@ -9,10 +9,10 @@ class ApiClient {
 
   Future<User> login(String id, String password) async {
     try {
-      Response response = await _dio.post(
-        'http://112.171.126.110:4000/api/login',
-        data: {'id': id, 'password': password},
-      );
+      Response response = await _dio.get(
+          'http://112.171.126.110:4000/api/login?id=${id}&pwd=${password}');
+
+//data: {"id": id, "password": password},
 
       if (response.statusCode == 200) {
         var user = jsonDecode(response.data);
